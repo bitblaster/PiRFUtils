@@ -10,11 +10,13 @@ if __name__ == '__main__':
     RECEIVED_SIGNAL[0] = genfromtxt(sys.argv[1], dtype='f8', delimiter=";", usecols = (0))
     RECEIVED_SIGNAL[1] = genfromtxt(sys.argv[1], dtype='f8', delimiter=";", usecols = (1))
 
-    firstSampleTime = RECEIVED_SIGNAL[0][0];
+    lastSampleTime = RECEIVED_SIGNAL[0][0];
     print 'Processing samples...'
     for i in range(len(RECEIVED_SIGNAL[0])):
-        RECEIVED_SIGNAL[0][i] = RECEIVED_SIGNAL[0][i] - firstSampleTime
-
+        currentSignal = RECEIVED_SIGNAL[0][i]
+        RECEIVED_SIGNAL[0][i] = currentSignal - lastSampleTime
+        lastSampleTime = currentSignal
+    
     repetitions = 1
     if len(sys.argv) > 3:
         repetitions = int(sys.argv[3])
